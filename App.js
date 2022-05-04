@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, FlatList} from 'react-native';
 import Form from './components/form';
+import Item from './components/item';
 
 export default function App() {
   const [search, setSearch] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
   return (
     <View style={styles.container}>
@@ -18,11 +19,15 @@ export default function App() {
       <Form search={search} setSearch={setSearch} setRecipes={setRecipes} setIsLoading={setIsLoading} />
       <View style={styles.content}>
         {isLoading ? (
-          <ActivityIndicator size="large" color="blue" />
+          <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <Text>{}</Text>
-        )}
-      </View>
+          <FlatList
+            data={recipes}
+            renderItem={({ item }) => <Item item={item} />}
+            keyExtractor={item => item.id}
+          />
+        )}        
+      </View>        
       <View style={styles.body}>
       </View>
     </View>

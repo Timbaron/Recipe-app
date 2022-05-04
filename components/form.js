@@ -5,14 +5,14 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 export default function Form({search, setSearch, setRecipes, setIsLoading}) {
 
         const getRecipiesFromApiAsync = async () => {
+            setIsLoading(true);
             try {
                 const response = await fetch(
-                    'https://api.spoonacular.com/recipes/complexSearch?apiKey=2e56c9010ca2488d9541410d2d3863bc&query=' + search,
+                    'https://api.spoonacular.com/food/search?apiKey=2e56c9010ca2488d9541410d2d3863bc&query=' + search,
                                      
                 );
                 const json = await response.json();
-                console.log(json.results);
-                setRecipes(json.results);
+                setRecipes(json.searchResults[0].results);
             } catch (error) {
                 Alert.alert('Error', error.message, [{text: 'OK'}]);
                 console.error(error);
