@@ -1,37 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, FlatList} from 'react-native';
-import Form from './components/form';
-import Item from './components/item';
+import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './components/home';
+import Details from './components/details';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [search, setSearch] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [recipes, setRecipes] = useState([]);
+  const screens = [
+    {
+      title: 'Home',
+      component: Home,
+      key: 1,
+    },
+    {
+      title: 'Details',
+      component: Details,
+      key: 2,
+    },
+  ];
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}><Text style={styles.big}>R</Text>ecipes</Text>
-      </View>
-      <Text style={styles.bodyText}>
-        Search for your meal.
-      </Text>
-      <Form search={search} setSearch={setSearch} setRecipes={setRecipes} setIsLoading={setIsLoading} />
-      <View style={styles.content}>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <FlatList
-            data={recipes}
-            renderItem={({ item }) => <Item item={item} />}
-            keyExtractor={item => item.id}
-          />
-        )}        
-      </View>        
-      <View style={styles.body}>
-      </View>
-    </View>
-  );
+    <NavigationContainer>
+      <Stack.Navigator>
+        {screens.map(({key,  title, component }) => (
+          <Stack.Screen key={key} name={title} component={component} />
+        ))}
+      </Stack.Navigator>
+      <StatusBar style="dark" />
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -40,22 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'coral',
     alignItems: 'center',
     // justifyContent: 'center',
-  },
-  header: {
-    backgroundColor: 'coral',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  big: {
-    fontSize: 30,
-    fontFamily: "Arial",
-    fontStyle: 'italic',
-    color: 'blue',
   },
   body: {
     backgroundColor: 'white',

@@ -1,22 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from 'react-native';
 import React from 'react';
 
 
-export default function Item({ item }) {
+export default function Item({ item, navigation }) {
     return (
-        <View style={styles.item}>
-            <View>
-                {/* item name */}
-                <Image
-                    style={styles.stretch}
-                    source={{ uri: item.image }}
-                />
-                <Text style={styles.itemName}>{item.name}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Details', { item: item, navigation: navigation})}>
+            <View style={styles.item}>
+                <View style={styles.imageBox}>
+                    {/* item name */}
+                    <Image
+                        style={styles.stretch}
+                        source={{ uri: item.image }}
+                    />
+                    <Text ellipsizeMode='tail' numberOfLines={1} style={styles.itemName}>{item.name}</Text>
+                </View>
+                <View>
+                </View>
             </View>
-            <View>
-            </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -26,8 +27,14 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     stretch: {
-        width: '100%',
+        width: 200,
         height: 200,
+        
+    },
+    imageBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
     },
     itemName: {
         paddingTop: 10,
@@ -35,7 +42,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center',
-    }, 
+    },
     item: {
         flexDirection: 'row',
         justifyContent: 'center',
