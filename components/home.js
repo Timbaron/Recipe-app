@@ -5,26 +5,38 @@ import Form from './form';
 import Item from './item';
 import Header from './header';
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [recipes, setRecipes] = useState([]);
+    const [request, setRequest] = useState(false);
     return (
         <View style={styles.container}>
             <Header />
             <Text style={styles.bodyText}>
                 Search for your meal.
             </Text>
-            <Form search={search} setSearch={setSearch} setRecipes={setRecipes} setIsLoading={setIsLoading} />
+            <Form search={search} setSearch={setSearch} setRecipes={setRecipes} setRequest={setRequest} setIsLoading={setIsLoading} />
             <View style={styles.content}>
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0000ff" />
                 ) : (
-                    <FlatList
-                        data={recipes}
-                        renderItem={({ item }) => <Item item={item} navigation={navigation} />}
-                        keyExtractor={item => item.id}
-                    />
+                    // if recipes is empty, show this message
+                    recipes.length === 0 ? (
+                        request == false ? (
+                            <Text></Text>
+                        ) : (
+                            <Text style={styles.bodyText}>
+                                No recipes found. Please try again.
+                            </Text>
+                        )
+                    ) : (
+                        <FlatList
+                            data={recipes}
+                            renderItem={({ item }) => <Item item={item} navigation={navigation} />}
+                            keyExtractor={item => item.id}
+                        />
+                    )
                 )}
             </View>
             <View style={styles.body}>

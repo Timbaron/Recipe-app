@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, FlatList, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './components/home';
@@ -21,11 +21,34 @@ export default function App() {
       key: 2,
     },
   ];
+  // function LogoTitle() {
+  //   return (
+  //     <Image
+  //       style={{ width: 70, height: 50 }}
+  //       source={ require('./assets/logo.jpg') }
+  //     />
+  //   );
+  // }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        // screenOptions={{
+        //   headerStyle: {
+        //     backgroundColor: '#f4511e',
+        //   },
+        //   headerTintColor: '#fff',
+        //   headerTitleStyle: {
+        //     fontWeight: 'bold',
+        //   },
+        //   headerTitle: () => <LogoTitle />
+        // }}
+      >
         {screens.map(({key,  title, component }) => (
-          <Stack.Screen key={key} name={title} component={component} />
+          <Stack.Screen key={key} name={title} component={component}
+            options={{
+              headerShown: false,
+            }}
+          />
         ))}
       </Stack.Navigator>
       <StatusBar style="dark" />

@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, FlatList, Image, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, useWindowDimensions, Button } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import Header from './header';
 
-export default function Details({ route }) {
+export default function Details({ route, navigation }) {
     const { item } = route.params;
     const { width } = useWindowDimensions();
     const source = {
@@ -28,7 +28,9 @@ export default function Details({ route }) {
                         source={source}
                     />
                 </View>
-
+                <View style={styles.button}>
+                    <Button title="Go back" color="coral" onPress={() => navigation.goBack()} />
+                </View>
             </View>
         </View>
     )
@@ -42,10 +44,10 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     body: {
-        width: 500,
+        width: '100%',
         height: 300,
         backgroundColor: 'darksalmon',
-        borderRadius:15,
+        borderRadius: 15,
         paddingLeft: 10,
         paddingRight: 10,
         alignItems: 'center',
@@ -57,14 +59,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
-    content: {        
+    content: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
     },
     image: {
-        width: 200, 
-        height: 200, 
+        width: 200,
+        height: 200,
         borderRadius: 10,
         marginBottom: 20,
     },
@@ -74,5 +76,11 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontStyle: 'italic',
+    },
+    button: {
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

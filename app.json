@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Elearning",
-    "slug": "Elearning",
+    "name": "Recipe",
+    "slug": "Recipe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "coral"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Item({ item, navigation }) {
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Details', { item: item, navigation: navigation})}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.push('Details', { item: item, navigation: navigation})}>
             <View style={styles.item}>
                 <View style={styles.imageBox}>
                     {/* item name */}
@@ -24,7 +24,6 @@ export default function Item({ item, navigation }) {
 const styles = StyleSheet.create({
     container: {
         PaddingTop: 20,
-        // justifyContent: 'center',
     },
     stretch: {
         width: 200,

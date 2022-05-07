@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-export default function Form({search, setSearch, setRecipes, setIsLoading}) {
+export default function Form({ search, setSearch, setRecipes, setIsLoading, setRequest }) {
 
-        const getRecipiesFromApiAsync = async () => {
-            setIsLoading(true);
+    const getRecipiesFromApiAsync = async () => {
+        setIsLoading(true);
+        // validation
+        if (search.length < 3) {
+            Alert.alert('Error', 'Search term must be at least 3 characters long.', { text: 'OK' });
+            setIsLoading(false);
+        } else {
+            setRequest(true);
             try {
                 const response = await fetch(
                     'https://api.spoonacular.com/food/search?apiKey=2e56c9010ca2488d9541410d2d3863bc&query=' + search,
-                                     
+
                 );
                 const json = await response.json();
                 setRecipes(json.searchResults[0].results);
             } catch (error) {
-                Alert.alert('Error', error.message, [{text: 'OK'}]);
+                Alert.alert('Error', error.message, [{ text: 'OK' }]);
                 console.error(error);
             } finally {
                 setIsLoading(false);
             }
-        };
+        }
+    };
     // useEffect(() => {
     //     getRecipiesFromApiAsync();
     // }, []);
